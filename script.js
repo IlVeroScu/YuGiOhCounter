@@ -1,100 +1,85 @@
-let settingsOpen = false;
-
-function toggleSettingsTab() {
-    const mainTab = document.getElementById('main-tab');
-    const settingsTab = document.getElementById('settings-tab');
-    const settingsButton = document.getElementById('settings-icon-img');
-
-    if (!settingsOpen) {
-        mainTab.classList.add('hidden');
-        settingsTab.classList.remove('hidden');
-        settingsButton.src = 'https://img.icons8.com/ios-filled/50/ffffff/back.png';
-    } else {
-        mainTab.classList.remove('hidden');
-        settingsTab.classList.add('hidden');
-        settingsButton.src = 'https://img.icons8.com/ios-filled/50/ffffff/settings.png';
-    }
-
-    settingsOpen = !settingsOpen;
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/84dc13b7-a2e7-4b45-83ec-311e72e82900/dd6hhft-d09c0a51-dc22-43e0-b4c4-9d426fb7c14a.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzg0ZGMxM2I3LWEyZTctNGI0NS04M2VjLTMxMWU3MmU4MjkwMFwvZGQ2aGhmdC1kMDljMGE1MS1kYzIyLTQzZTAtYjRjNC05ZDQyNmZiN2MxNGEuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.rFUrNSDar1CwY76UDGRqCp1oBOP2Mi5j3lUXggjHz2c');
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: white;
+    position: relative;
 }
 
-function showMainTab() {
-    const mainTab = document.getElementById('main-tab');
-    const settingsTab = document.getElementById('settings-tab');
-    const settingsButton = document.getElementById('settings-icon-img');
-
-    mainTab.classList.remove('hidden');
-    settingsTab.classList.add('hidden');
-    settingsButton.src = 'https://img.icons8.com/ios-filled/50/ffffff/settings.png';
-
-    settingsOpen = false;
+.tab {
+    display: none;
 }
 
-function setBaseLifePoints(lp) {
-    document.getElementById('player1-lifepoints').innerText = lp;
-    document.getElementById('player2-lifepoints').innerText = lp;
+.tab:not(.hidden) {
+    display: block;
 }
 
-function changeLifePoints(player) {
-    const changeInput = document.getElementById(`${player}-change`);
-    const changeValue = parseInt(changeInput.value);
-    const lifePointsElement = document.getElementById(`${player}-lifepoints`);
-    let currentLifePoints = parseInt(lifePointsElement.innerText);
-
-    currentLifePoints -= changeValue;
-    if (currentLifePoints < 0) currentLifePoints = 0;
-
-    lifePointsElement.innerText = currentLifePoints;
-
-    if (currentLifePoints <= 0) {
-        declareWinner(player === 'player1' ? 'player2' : 'player1');
-    }
+.container, .settings-container {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7); /* Black background with reduced opacity */
+    border-radius: 10px;
+    margin: 20px;
 }
 
-function declareWinner(winner) {
-    const winnerName = document.getElementById(`${winner}-name`).value;
-    const winnerElement = document.getElementById('winner');
-    winnerElement.innerText = `${winnerName} ha vinto!`;
+.logo {
+    width: 50%;
+    height: auto;
+    margin: 20px 0;
 }
 
-function undoLastAction() {
-    // Logica per annullare l'ultima azione
+.base-lp-buttons button, .controls button, .settings-button button {
+    background-color: #ffcc00;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    border-radius: 5px;
 }
 
-function resetLifePoints() {
-    document.getElementById('player1-lifepoints').innerText = 7000;
-    document.getElementById('player2-lifepoints').innerText = 7000;
-    document.getElementById('winner').innerText = '';
+.base-lp-buttons, .controls {
+    margin: 20px 0;
 }
 
-function incrementPumpkinCounter() {
-    const countElement = document.getElementById('pumpkin-count');
-    let count = parseInt(countElement.innerText);
-    count++;
-    countElement.innerText = count;
+.player {
+    margin: 20px 0;
 }
 
-function decrementPumpkinCounter() {
-    const countElement = document.getElementById('pumpkin-count');
-    let count = parseInt(countElement.innerText);
-    if (count > 0) {
-        count--;
-        countElement.innerText = count;
-    }
+.player input {
+    padding: 10px;
+    font-size: 1em;
+    margin: 5px 0;
 }
 
-function flipCoin() {
-    const resultElement = document.getElementById('coin-result');
-    const result = Math.random() < 0.5 ? 'Testa' : 'Croce';
-    resultElement.innerText = result;
+.lifepoints {
+    font-size: 2em;
+    margin: 10px 0;
 }
 
-function togglePumpkinCounter() {
-    const pumpkinCounter = document.getElementById('pumpkin-counter');
-    pumpkinCounter.classList.toggle('hidden');
+.winner {
+    font-size: 1.5em;
+    margin: 20px 0;
 }
 
-function toggleCoin() {
-    const coinFlip = document.getElementById('coin-flip');
-    coinFlip.classList.toggle('hidden');
+.hidden {
+    display: none;
+}
+
+.settings-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.settings-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+#pumpkin-counter p, #coin-flip p {
+    margin: 10px 0;
 }
