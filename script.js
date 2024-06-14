@@ -1,4 +1,5 @@
 let settingsOpen = false;
+let lastAction = null;
 
 function toggleSettingsTab() {
     const mainTab = document.getElementById('main-tab');
@@ -41,6 +42,11 @@ function changeLifePoints(player) {
     const lifePointsElement = document.getElementById(`${player}-lifepoints`);
     let currentLifePoints = parseInt(lifePointsElement.innerText);
 
+    lastAction = {
+        player: player,
+        previousLifePoints: currentLifePoints
+    };
+
     currentLifePoints -= changeValue;
     if (currentLifePoints < 0) currentLifePoints = 0;
 
@@ -58,7 +64,11 @@ function declareWinner(winner) {
 }
 
 function undoLastAction() {
-    // Logica per annullare l'ultima azione
+    if (lastAction) {
+        const lifePointsElement = document.getElementById(`${lastAction.player}-lifepoints`);
+        lifePointsElement.innerText = lastAction.previousLifePoints;
+        lastAction = null;
+    }
 }
 
 function resetLifePoints() {
